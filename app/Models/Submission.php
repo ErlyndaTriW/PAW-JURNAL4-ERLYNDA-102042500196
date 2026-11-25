@@ -12,10 +12,12 @@ class Submission extends Model
 
     // TODO 2: Tambahkan 'nilai' dan 'catatan_dosen' ke $fillable, serta lengkapi logika status nilai ('Belum Dinilai', 'Lulus' >= 70, 'Perlu Perbaikan')
     protected $fillable = [
-        'assignment_id',
-        'user_id',
-        'jawaban',
+        'assignment_id', 
+        'user_id', 
+        'jawaban', 
         'submitted_at',
+        'nilai', 
+        'catatan_dosen',
     ];
 
     protected $casts = [
@@ -35,6 +37,13 @@ class Submission extends Model
 
     public function getStatusNilaiAttribute(): string
     {
+        if ($this->nilai === null) {
+        return 'Belum Dinilai';
+    }
+    if ($this->nilai >= 70) {
+        return 'Lulus';
+    }
+    return 'Perlu Perbaikan';
         // TODO 2: Lengkapi logika status nilai ('Belum Dinilai' jika null, 'Lulus' jika >= 70, selain itu 'Perlu Perbaikan')
         return '';
     }
